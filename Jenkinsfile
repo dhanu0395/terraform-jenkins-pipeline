@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	tools {
-		terraform "terraform_0.15.5"
+		terraform "terraform_1.12.2"
 	}
 	stages {
 		stage ('checkout SCM') {
@@ -60,6 +60,7 @@ pipeline {
             			echo 'Terraform Infrastructure Pipeline failed! Check console output for errors.'
         		}
 		}
+	}
 }
 
 	
