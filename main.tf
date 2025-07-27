@@ -49,12 +49,12 @@ output "created_deployment_log_file_path" {
 }
 
 output "created_output_directory_path" {
-  value       = null_resource.output_directory.path
+  value       = null_resource.output_directory.id
   description = "Path to the first created output directory."
 }
 
 output "created_temp_directory_path" {
-  value       = null_resource.temp_directory.path
+  value       = null_resource.temp_directory.id
   description = "Path to the second created temporary directory."
 }
 
