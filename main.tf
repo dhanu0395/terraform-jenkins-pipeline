@@ -16,7 +16,7 @@ resource "local_file" "dev_config_file" {
 # Resource to create the second file
 
 resource "local_file" "deployment_log_file" {
-        filename = "${path.cwd}/${var.add_file_one_name}"
+        filename = "${path.cwd}/${var.add_file_two_name}"
         content = var.file_two_content
 }
 
