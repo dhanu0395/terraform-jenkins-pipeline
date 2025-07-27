@@ -1,66 +1,63 @@
 pipeline {
-	agent any
-	tools {
-		terraform "terraform_1.12.2"
-	}
-	stages {
-		stage ('checkout SCM') {
-			steps{
-				git branch: 'main', url: 'https://github.com/dhanu0395/terraform-jenkins-pipeline.git'
-                    		echo "Repository cloned successfully into Jenkins workspace: ${pwd()}"
-               		 
-			}
-		}
-		
-		stage ('Terraform init') {
-			steps{
-				dir('terraform-jenkins-pipeline'){
-					sh 'terraform init'
-				}
+    agent any
 
-			}
+    tools {
+        terraform "terraform_1.12.2"
+    }
 
-		}
+    stages {
+        stage('Checkout SCM') {
+            steps {
+                git branch: 'main', url: 'https://github.com/dhanu0395/terraform-jenkins-pipeline.git'
+                echo "Repository cloned successfully into Jenkins workspace: ${pwd()}"
+            }
+        }
 
-		stage ('terraform validate') {
-			steps {
-				dir('terraform-jenkins-pipeline'){
-					sh 'terraform validate'
-				}
-			}
-		}
-		
-		stage ('terraform plan') {
-			steps {
-				dir('terraform-jenkins-pipeline'){
-					sh 'terraform plan -out=tfplan'
-				}
-			}
+        stage('Terraform init') {
+            steps {
+                dir('terraform-jenkins-pipeline') {
+                    sh 'terraform init'
+                }
+            }
+        }
 
-		}
+        stage('Terraform validate') {
+            steps {
+                dir('terraform-jenkins-pipeline') {
+                    sh 'terraform validate'
+                }
+            }
+        }
 
-		stage ('terraform apply') {
-			steps {
-				dir('terraform-jenkins-pipeline'){
-					sh 'terraform apply -auto-approve tfplan'
-				}
-			}
-		}
+        stage('Terraform plan') {
+            steps {
+                dir('terraform-jenkins-pipeline') {
+                    sh 'terraform plan -out=tfplan'
+                }
+            }
+        }
 
-		post {
-			always {
-				deleteDir()
-			}
-			
-			success {
-            			echo 'Terraform Infrastructure Pipeline finished successfully!'
-       			}
+        stage('Terraform apply') {
+            steps {
+                dir('terraform-jenkins-pipeline') {
+                    sh 'terraform apply -auto-approve tfplan'
+                }
+            }
+        }
+    }
 
-        		failure {
-            			echo 'Terraform Infrastructure Pipeline failed! Check console output for errors.'
-        		}
-		}
-	}
+    post {
+        always {
+            deleteDir()
+        }
+
+        success {
+            echo 'Terraform Infrastructure Pipeline finished successfully!'
+        }
+
+        failure {
+            echo 'Terraform Infrastructure Pipeline failed! Check console output for errors.'
+        }
+    }
 }
 
-	
