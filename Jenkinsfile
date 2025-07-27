@@ -48,7 +48,7 @@ pipeline {
 
     post {
         always {
-           # deleteDir()
+           echo 'Terraform Infrastructure pipeline started running'
         }
 
         success {
