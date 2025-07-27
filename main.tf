@@ -21,14 +21,18 @@ resource "local_file" "deployment_log_file" {
 }
 
 # Resource to create the first directory
-resource "local_directory" "output_directory" {
-	path = "${path.cwd}/${var.first_dir_name}"
+resource "null_resource" "output_directory" {
+  provisioner "local-exec" {
+    command = "mkdir -p ${path.cwd}/${var.first_dir_name}"
+  }
 }
 
 # Resource to create the second directory
 
-resource "local_directory" "temp_directory" {
-        path = "${path.cwd}/${var.second_dir_name}"
+resource "null_resource" "temp_directory" {
+  provisioner "local-exec" {
+    command = "mkdir -p ${path.cwd}/${var.second_dir_name}"
+  }
 }
 
 # Output blocks to display the paths of the created resources after 'terraform apply'
