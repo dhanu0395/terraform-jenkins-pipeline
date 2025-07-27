@@ -48,7 +48,7 @@ pipeline {
 
     post {
         always {
-            deleteDir()
+           # deleteDir()
         }
 
         success {
